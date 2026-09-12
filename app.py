@@ -159,7 +159,7 @@ def filter_dataframe_by_keyword(df, keyword):
             return filtered_df
     return None
 
-# --- دالة آمنة للبحث والتحميل البديل تمنع خطأ ValueError ---
+# --- دالة آمنة للبحث والتحميل البديل تمنع خطأ ValueError وتطابق الملفات ---
 def get_df_with_fallback(file_names, fallback_df, keyword):
     for fname in file_names:
         df = load_excel_file(fname)
@@ -176,8 +176,8 @@ df_batch1 = load_excel_file("batch1.xlsx")
 df_batch2 = load_excel_file("batch2.xlsx")
 df_cpd = load_excel_file("CPD To 12-5-2026.xlsx")
 
-# --- تحميل الأقسام الخاصة والجديدة بالطريقة الآمنة ---
-df_tot_2023 = get_df_with_fallback(["tot2023.xlsx", "tot_2023.xlsx"], df_training, "2023")
+# --- تحميل الأقسام السنوية بمطابقة دقيقة لأسماء الملفات لديك ---
+df_tot_2023 = get_df_with_fallback(["tot2023.xlsx", "tot_2023.xlsx", "tot.xlsx"], df_training, "2023")
 df_cader_2024 = get_df_with_fallback(["cader2024.xlsx", "cader_2024.xlsx"], df_cader, "2024")
 df_cader_2025 = get_df_with_fallback(["cader2025.xlsx", "cader_2025.xlsx"], df_cader, "2025")
 df_cader_2026 = get_df_with_fallback(["cader2026.xlsx", "cader_2026.xlsx"], df_cader, "2026")
@@ -379,7 +379,7 @@ def render_section(title, df, tab_index, file_hint=""):
             
             st.dataframe(display_df, use_container_width=True)
         else:
-            hint_msg = f" (يمكنك وضع ملف الإكسل بالإسم: `{file_hint}` في المجلد)" if file_hint else ""
+            hint_msg = f" (يمكنك رفع ملف الإكسل بالإسم: `{file_hint}` في المجلد)" if file_hint else ""
             st.warning(f"⚠️ تعذر العثور على سجلات مطابقة لـ '{title}'{hint_msg}.")
 
 # --- عرض محتوى جميع التبويبات والأقسام التفصيلية ---
